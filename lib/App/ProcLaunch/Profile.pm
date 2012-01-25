@@ -33,6 +33,7 @@ use constant KNOWN_FILES => [ qw/ run pid_file user restart reload / ];
 use Class::Struct
     directory     => '$',
     disappeared   => '$',
+    run_log_path      => '$',
     _pid_file     => '$',
     _status       => '$',
     _should_start => '$',
@@ -85,7 +86,7 @@ sub start
     if ($pid == 0) {
         $self->drop_privs();
         chdir $self->directory();
-        exec("./run 2>&1 >> ../run.log");
+        exec("./run 2>&1 >> $self->run_log_path()");
     } else {
         waitpid($pid, WNOHANG);
     }

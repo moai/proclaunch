@@ -35,6 +35,7 @@ use Class::Struct
     foreground        => '$',
     log_level         => '$',
     log_path          => '$',
+    run_log_path      => '$',
     _profiles         => '%',
     _last_scan_time   => '$',
     _murdered         => '$',
@@ -145,7 +146,8 @@ sub scan_profiles
         unless ($self->_profiles($profile)) {
             log_debug "ProcLaunch creating profile for $profile";
             my $p = App::ProcLaunch::Profile->new(
-                directory => $profile,
+                directory    => $profile,
+                run_log_path => $self->run_log_path(),
             );
 
             $self->_profiles($profile, $p);

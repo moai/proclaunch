@@ -8,10 +8,11 @@ use App::ProcLaunch;
 use Getopt::Long;
 
 GetOptions(
-    'f|foreground' => \my $foreground,
-    'D|debug'      => \my $debug,
-    'log-level=s'  => \my $log_level,
-    'log-path=s'   => \my $log_path,
+    'f|foreground'   => \my $foreground,
+    'D|debug'        => \my $debug,
+    'log-level=s'    => \my $log_level,
+    'log-path=s'     => \my $log_path,
+    'run-log-path=s' => \my $run_log_path,
 );
 
 my ($state_dir, $profiles_dir) = @ARGV;
@@ -29,11 +30,13 @@ my $abs_state_dir = rel2abs($state_dir);
 my $abs_profiles_dir = rel2abs($profiles_dir);
 
 $log_path ||= $abs_profiles_dir . '/error.log';
+$run_log_path ||= '../run.log';
 
 App::ProcLaunch->new(
     state_dir    => $abs_state_dir,
     profiles_dir => $abs_profiles_dir,
     log_path     => $log_path,
+    run_log_path => $run_log_path,
     foreground   => $foreground,
     log_level    => $log_level,
 )->run();
